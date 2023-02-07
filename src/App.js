@@ -1,21 +1,10 @@
 import React from 'react';
-// import axios from 'axios';
 
 function App() {
   const token = 'sO7zGyswnmlJSN5XZ342f_OX4cKzRMA1Pg02vMAny-s';
 
-  // let searchVelue;
-
   const [items, setItems] = React.useState([]);
   const [searchVelue, setsearchVelue] = React.useState('');
-  //console.log(items);
-
-  // const form = document.querySelector('.search__form');
-  // console.log(form);
-  // form.addEventListener('submit',(evt)=>{
-  //   evt.preventDefault()
-  //   searchSabmit()
-  // })
 
   const searchSabmit = (searchVelue) => {
     fetch(
@@ -34,7 +23,6 @@ function App() {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((res) => {
-        // console.log(res);
         setItems(res.results);
       })
       .catch((res) => {
@@ -56,7 +44,6 @@ function App() {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((res) => {
-        //console.log(res);
         setItems(res);
       })
       .catch((res) => {
@@ -80,7 +67,7 @@ function App() {
               className="search__botton"
               type="submit"
               onClick={(evt) => {
-                evt.preventDefault()
+                evt.preventDefault();
                 searchSabmit(searchVelue);
               }}
             >
