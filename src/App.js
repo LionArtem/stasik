@@ -4,9 +4,11 @@ import React from 'react';
 function App() {
   const token = 'sO7zGyswnmlJSN5XZ342f_OX4cKzRMA1Pg02vMAny-s';
 
-  let searchVelue
+  // let searchVelue;
 
   const [items, setItems] = React.useState([]);
+  const [searchVelue, setsearchVelue] = React.useState('');
+  //console.log(items);
 
   // const form = document.querySelector('.search__form');
   // console.log(form);
@@ -16,12 +18,15 @@ function App() {
   // })
 
   const searchSabmit = (searchVelue) => {
-    fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchVelue}`, {
-      headers: {
-        authorization: `Client-ID ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    fetch(
+      `https://api.unsplash.com/search/photos?page=1&query=${searchVelue}`,
+      {
+        headers: {
+          authorization: `Client-ID ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -29,7 +34,7 @@ function App() {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setItems(res.results);
       })
       .catch((res) => {
@@ -51,7 +56,7 @@ function App() {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setItems(res);
       })
       .catch((res) => {
@@ -67,11 +72,17 @@ function App() {
       <main>
         <section>
           <form className="search__form">
-            <input value={searchVelue}></input>
+            <input
+              value={searchVelue}
+              onChange={(e) => setsearchVelue(e.target.value)}
+            ></input>
             <button
               className="search__botton"
               type="submit"
-              onClick={()=> searchSabmit(searchVelue)}
+              onClick={(evt) => {
+                evt.preventDefault()
+                searchSabmit(searchVelue);
+              }}
             >
               найти
             </button>
@@ -80,7 +91,12 @@ function App() {
         <section>
           {items.map((item) => (
             <>
-              <img width={200} height={200} src={item.urls.small} />
+              <img
+                width={200}
+                height={200}
+                key={item.urls.small}
+                src={item.urls.small}
+              />
             </>
           ))}
         </section>
